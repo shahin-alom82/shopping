@@ -1,9 +1,19 @@
+
+"use client"
 import Image from "next/image";
 import PriceFormate from "./PriceFormate";
 import { IoIosStar, IoMdCheckmark } from "react-icons/io";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/redux/shoppingSlice";
 
 const ProductCarts = ({ product }) => {
+
+      const dispatch = useDispatch()
+      const addToCartButton = () => {
+            dispatch(addToCart(product))
+      }
+
       return (
             <div>
                   <div className="relative hover:shadow-md hover:shadow-gray-400 lg:w-[300px] duration-300">
@@ -51,7 +61,7 @@ const ProductCarts = ({ product }) => {
                                     <p className="text-gray-800">Seller: {product.seller}</p>
                               </div>
 
-                              <div>
+                              <div onClick={addToCartButton}>
                                     <button className="w-full bg-blue-500 text-white py-1 rounded-full mb-1 font-medium">Add To Cart</button>
                               </div>
 

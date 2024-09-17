@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidbar";
 import Layout from "@/components/Layout";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,7 +34,7 @@ export default function RootLayout({ children }) {
           </div>
           <div className="flex">
             {/* Sticky Sidebar */}
-            <div className="sticky top-[82px] h-[calc(100vh-80px)]  z-40 hidden md:block">
+            <div className="sticky top-[97px] h-[calc(100vh-80px)]  z-40 hidden md:block">
               <Sidebar />
             </div>
             {/* Main content */}
@@ -42,6 +43,10 @@ export default function RootLayout({ children }) {
               {/* <Footer /> */}
             </div>
           </div>
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+          />
         </Layout>
 
       </body>

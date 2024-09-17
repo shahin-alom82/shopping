@@ -7,7 +7,7 @@ const ProductCart = async () => {
       const product = await fetchData(endPoind)
 
       return (
-            <div className="py-10">
+            <div className="lg:py-10 py-4">
                   <Container>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-6 gap-4">
                               {
