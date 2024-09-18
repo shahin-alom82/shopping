@@ -12,7 +12,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToUser, removeUser } from "@/redux/shoppingSlice";
 
-const Header = async () => {
+const Header =  () => {
       const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
       const [searchValue, setSearchValue] = useState("");
       const { data: session } = useSession();
@@ -42,10 +42,10 @@ const Header = async () => {
 
 
 
-      const endPoind = "https://shoppingapi.vercel.app/shopping"
-      const product = await fetchData(endPoind)
-      const carts = product.filter((item) => item.category === 'Cap')
-      console.log("cart", carts)
+      // const endPoind = "https://shoppingapi.vercel.app/shopping"
+      // const product = await fetchData(endPoind)
+      // const carts = product.filter((item) => item.category === 'Cap')
+      // console.log("cart", carts)
 
 
 
