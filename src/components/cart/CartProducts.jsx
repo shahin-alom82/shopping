@@ -6,15 +6,17 @@ import Image from "next/image";
 import PriceFormate from "../PriceFormate";
 import { IoClose } from "react-icons/io5";
 import { FiMinus, FiPlus } from "react-icons/fi";
-import CartSummary from "./CartSummary";
 import { cartDelete, decrease, increase } from "@/redux/shoppingSlice";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { useSession } from "next-auth/react";
 
 
 const CartProducts = () => {
       const { cart } = useSelector((state) => state.shopping);
       const dispatch = useDispatch()
+      const { data: session } = useSession();
 
 
       const handlePlus = (id) => {
@@ -53,6 +55,33 @@ const CartProducts = () => {
             setPayableTotal(priceSum - discountSum);
       }, [cart]);
 
+
+
+      // payment
+      const stripePromise = loadStripe('pk_test_51Q0RoxHdejLmF0vtHl8VkT1Q6K38XXP3s2tWFfoa27xpp8jTROt3EwqWXncI0tihOz94o1JQNshX3wFmqy06FRmD00xUhC5yrp');
+
+      const handleCheakOut = async () => {
+            const stripe = await stripePromise;
+            const response = await fetch("https://shopping-kohl.vercel.app/api/checkout", {
+                  method: "POST",
+                  headers: {
+                        "Content-type": "application/json"
+                  },
+                  body: JSON.stringify({
+                        item: cart,
+                        email: session.user.email,
+                  })
+            })
+            const data = await response.json();
+            if (response.ok) {
+                  stripe?.redirectToCheckout({ sessionId: data.id });
+                  // dispatch(resetOrder())
+
+            }
+            else {
+                  throw new Error("Failed to create Stripe Payment");
+            }
+      }
 
 
 
@@ -139,53 +168,54 @@ const CartProducts = () => {
 
 
 
-                                         {/* Cart Summary Start*/}
+                                          {/* Cart Summary Start*/}
 
-<div className="px-4 lg:px-0">
-      <div className="lg:py-10 py-4 lg:w-[600px] w-full mx-auto">
-            <div>
-                  <h2 className="text-2xl lg:text-3xl font-medium text-gray-900 mt-3 text-center lg:text-left">
-                        Order summary
-                  </h2>
-                  <div className="mt-8 lg:mt-10 space-y-4">
-                        <div className="flex items-center justify-between">
-                              <p className="text-sm lg:text-base text-gray-700">Subtotal</p>
-                              <p className="font-medium text-green-600">
-                                    <PriceFormate amount={totalPrice} />
-                              </p>
-                        </div>
+                                          <div className="px-4 lg:px-0">
+                                                <div className="lg:py-10 py-4 lg:w-[600px] w-full mx-auto">
+                                                      <div>
+                                                            <h2 className="text-2xl lg:text-3xl font-medium text-gray-900 mt-3 text-center lg:text-left">
+                                                                  Order summary
+                                                            </h2>
+                                                            <div className="mt-8 lg:mt-10 space-y-4">
+                                                                  <div className="flex items-center justify-between">
+                                                                        <p className="text-sm lg:text-base text-gray-700">Subtotal</p>
+                                                                        <p className="font-medium text-green-600">
+                                                                              <PriceFormate amount={totalPrice} />
+                                                                        </p>
+                                                                  </div>
 
-                        <div className="flex items-center justify-between border-t-2 border-gray-200 pt-4">
-                              <p className="text-sm lg:text-base font-medium text-gray-700">
-                                    Total Discount
-                              </p>
-                              <p className="font-medium text-green-600">
-                                    <PriceFormate amount={totalDiscount} />
-                              </p>
-                        </div>
+                                                                  <div className="flex items-center justify-between border-t-2 border-gray-200 pt-4">
+                                                                        <p className="text-sm lg:text-base font-medium text-gray-700">
+                                                                              Total Discount
+                                                                        </p>
+                                                                        <p className="font-medium text-green-600">
+                                                                              <PriceFormate amount={totalDiscount} />
+                                                                        </p>
+                                                                  </div>
 
-                        <div className="flex items-center justify-between border-t-2 border-gray-200 pt-4">
-                              <p className="text-sm lg:text-base font-medium text-gray-700">
-                                    Payable Total
-                              </p>
-                              <p className="font-medium text-green-600">
-                                    <PriceFormate amount={payableTotal} />
-                              </p>
-                        </div>
+                                                                  <div className="flex items-center justify-between border-t-2 border-gray-200 pt-4">
+                                                                        <p className="text-sm lg:text-base font-medium text-gray-700">
+                                                                              Payable Total
+                                                                        </p>
+                                                                        <p className="font-medium text-green-600">
+                                                                              <PriceFormate amount={payableTotal} />
+                                                                        </p>
+                                                                  </div>
 
-                        <div className="w-full h-24">
-                              <button
-                                    className="bg-transparent border-2 border-blue-500 text-black rounded-lg w-full py-2 text-base lg:text-xl hover:text-gray-400 duration-300 my-2"
-                              >
-                                    Payment
-                              </button>
-                        </div>
-                  </div>
-            </div>
-      </div>
-</div>
+                                                                  <div className="w-full h-24">
+                                                                        <button
+                                                                              onClick={handleCheakOut}
+                                                                              className="bg-transparent border-2 border-blue-500 text-black rounded-lg w-full py-2 text-base lg:text-xl hover:text-gray-400 duration-300 my-2"
+                                                                        >
+                                                                              Payment
+                                                                        </button>
+                                                                  </div>
+                                                            </div>
+                                                      </div>
+                                                </div>
+                                          </div>
 
-{/* Cart Summary End*/}
+                                          {/* Cart Summary End*/}
 
 
 

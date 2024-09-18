@@ -1,10 +1,8 @@
 import Container from "@/components/Container";
 import PriceFormate from "@/components/PriceFormate";
 import { fetchData } from "@/data";
-import { addToCart } from "@/redux/shoppingSlice";
 import Image from "next/image";
 import { IoIosStar, IoMdCheckmark } from "react-icons/io";
-import { useDispatch } from "react-redux";
 
 
 const page = async ({ params }) => {
