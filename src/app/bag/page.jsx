@@ -1,3 +1,4 @@
+"use client"
 import Container from "@/components/Container";
 import ProductCarts from "@/components/ProductCarts";
 import { fetchData } from "@/data";

@@ -59,7 +59,6 @@ const CartProducts = () => {
 
       // payment
       const stripePromise = loadStripe('pk_test_51Q0RoxHdejLmF0vtHl8VkT1Q6K38XXP3s2tWFfoa27xpp8jTROt3EwqWXncI0tihOz94o1JQNshX3wFmqy06FRmD00xUhC5yrp');
-
       const handleCheakOut = async () => {
             const stripe = await stripePromise;
             const response = await fetch("https://shopping-kohl.vercel.app/api/checkout", {
