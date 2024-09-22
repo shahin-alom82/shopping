@@ -65,7 +65,7 @@ const CartProducts = () => {
 
       const handleCheakOut = async () => {
             const stripe = await stripePromise;
-            const response = await fetch("https://shopping-ywad.vercel.app/api/checkout", {
+            const response = await fetch("/api/checkout", {
                   method: "POST",
                   headers: {
                         "Content-type": "application/json"

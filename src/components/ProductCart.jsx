@@ -9,7 +9,7 @@ const ProductCart = async () => {
       return (
             <div className="lg:py-10 py-4">
                   <Container>
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-6 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-6 gap-4 md:gap-4">
                               {
                                     product.map((item, index) => <ProductCarts key={index} product={item} />)
                               }

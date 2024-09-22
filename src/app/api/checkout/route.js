@@ -8,11 +8,12 @@ export const POST = async (request) => {
       try {
             const reqBody = await request.json();
             const { email, item } = reqBody;
+
             const extractingItems = await item.map((item) => ({
                   quantity: item.quantity,
                   price_data: {
                         currency: "usd",
-                        unit_amount: item.price * 100,
+                        unit_amount: Math.round(item.price * 100),
                         product_data: {
                               name: item.name,
                               description: item.description,
@@ -32,6 +33,7 @@ export const POST = async (request) => {
                   },
             });
 
+            
             return NextResponse.json({
                   succes: true,
                   message: "server connected",

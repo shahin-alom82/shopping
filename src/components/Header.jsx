@@ -12,7 +12,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToUser, removeUser } from "@/redux/shoppingSlice";
 
-const Header =  () => {
+const Header = () => {
       const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
       const [searchValue, setSearchValue] = useState("");
       const { data: session } = useSession();
@@ -39,16 +39,7 @@ const Header =  () => {
             { title: "Earphones", href: "/earphones" },
             { title: "Bottle", href: "/bottle" },
       ];
-
-
-
-      // const endPoind = "https://shoppingapi.vercel.app/shopping"
-      // const product = await fetchData(endPoind)
-      // const carts = product.filter((item) => item.category === 'Cap')
-      // console.log("cart", carts)
-
-
-
+      
       return (
             <header className="border-b-2 border-gray-300 pb-4 sticky z-50 top-0 bg-white shadow-md">
                   <div className="flex justify-between items-center px-4 lg:px-14 p-4">
