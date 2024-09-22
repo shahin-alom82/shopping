@@ -72,7 +72,7 @@ const CartProducts = () => {
                   },
                   body: JSON.stringify({
                         item: cart,
-                        email: session.user.email,
+                        // email: session.user.email,
                   })
             })
             const data = await response.json();

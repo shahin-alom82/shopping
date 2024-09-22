@@ -103,8 +103,8 @@ const Header = () => {
                               {/* Favorite & Cart */}
 
 
-                              <Link href="/cart" className="relative">
-                                    <FiShoppingBag size={30} className="text-gray-500" />
+                              <Link href="/cart" className="relative hidden md:block">
+                                    <FiShoppingBag size={30} className="text-gray-500 " />
                                     <span className="absolute -top-6 -right-2 rounded-full px-[6px] text-[18px] text-green-600 font-semibold py-[2px]">
                                           {cart.length > 0 ? cart.length : "0"}
 
