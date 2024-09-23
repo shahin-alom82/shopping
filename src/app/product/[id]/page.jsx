@@ -11,8 +11,6 @@ const page = async ({ params }) => {
       const data = await fetchData(endPoind);
       const product = data.find((item) => item.id == id);
 
-    
-
       return (
             <div className="py-8">
                   <Container>

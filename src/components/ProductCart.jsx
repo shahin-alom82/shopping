@@ -11,9 +11,8 @@ const ProductCart = async () => {
                   <Container>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-6 gap-4 md:gap-4">
                               {
-                                    product.map((item, index) => <ProductCarts key={index} product={item} />)
+                                    product.slice(0, 32).map((item, index) => <ProductCarts key={index} product={item} />)
                               }
-
                         </div>
                   </Container>
             </div>

@@ -4,7 +4,7 @@ import Stripe from "stripe";
 
 
 export const POST = async (request) => {
-      const stripe = new Stripe('sk_test_51Q0RoxHdejLmF0vtgrsQsSzmKC4NWeZ1VI3ZuFbffNRnlrKXb9k0UJIW1iHyEPlDDydjDzGs9z65e2aV4RyoFOxu00buuTvWVG');
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
       try {
             const reqBody = await request.json();
             const { email, item } = reqBody;
@@ -33,7 +33,7 @@ export const POST = async (request) => {
                   },
             });
 
-            
+
             return NextResponse.json({
                   succes: true,
                   message: "server connected",

@@ -15,8 +15,10 @@ import { useSession } from "next-auth/react";
 
 const CartProducts = () => {
       const { cart } = useSelector((state) => state.shopping);
+      console.log("cart", cart)
       const dispatch = useDispatch()
       const { data: session } = useSession();
+
 
 
       const handlePlus = (id) => {
@@ -32,8 +34,6 @@ const CartProducts = () => {
       };
 
 
-
-
       // State to manage totals
       const [totalPrice, setTotalPrice] = useState(0);
       const [totalDiscount, setTotalDiscount] = useState(0);
@@ -43,7 +43,7 @@ const CartProducts = () => {
             let priceSum = 0;
             let discountSum = 0;
             cart.map((product) => {
-                  const subtotal = product.price * product.quantity;
+                  const subtotal = product.oldprice * product.quantity;
                   const discount = (product.oldprice - product.price) * product.quantity;
 
                   priceSum += subtotal;
@@ -57,11 +57,8 @@ const CartProducts = () => {
 
 
 
-
-
-
       // payment
-      const stripePromise = loadStripe('pk_test_51Q0RoxHdejLmF0vtHl8VkT1Q6K38XXP3s2tWFfoa27xpp8jTROt3EwqWXncI0tihOz94o1JQNshX3wFmqy06FRmD00xUhC5yrp');
+      const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
       const handleCheakOut = async () => {
             const stripe = await stripePromise;
@@ -78,8 +75,6 @@ const CartProducts = () => {
             const data = await response.json();
             if (response.ok) {
                   stripe?.redirectToCheckout({ sessionId: data.id });
-                  // dispatch(resetOrder())
-
             }
             else {
                   throw new Error("Failed to create Stripe Payment");
@@ -100,9 +95,6 @@ const CartProducts = () => {
                                           <h1 className="lg:text-3xl text-2xl text-gray-700 tracking-wide font-semibold">Your Shopping Cart</h1>
 
 
-
-
-
                                           <div className="overflow-x-auto mt-10 border-t-2 border-l-2 border-r-2 border-gray-300">
                                                 <table className="min-w-full">
                                                       <thead className="">
@@ -119,16 +111,12 @@ const CartProducts = () => {
                                                       </thead>
                                                       <tbody>
                                                             {cart.map((item) => (
-
-
-
-
-                                                                  <tr key={item.id} className="border-b-2 border-gray-300">
+                                                                  <tr className="border-b-2 border-gray-300" key={item.id}>
                                                                         <td className="px-4 py-2">
                                                                               <IoClose
                                                                                     onClick={() => {
                                                                                           dispatch(cartDelete(item.id));
-                                                                                          toast.success(`${item?.name.substring(0, 10)} deleted successfully!`);
+                                                                                          toast.success(`${item?.name?.substring(0, 10) || 'Product'} deleted successfully!`);
                                                                                     }}
                                                                                     className="text-gray-700 cursor-pointer"
                                                                                     size={25}
@@ -140,8 +128,10 @@ const CartProducts = () => {
                                                                                     <Image className="h-24 w-32" src={item?.img} alt="img" height={400} width={400} />
                                                                               </Link>
                                                                         </td>
-                                                                        <td className="px-4 py-2">{item.name.slice(0, 13)}</td>
-                                                                        <td className="px-4 py-2">{item.category}</td>
+
+                                                                        <td className="px-4 py-2">{item?.name ? item.name.slice(0, 13) : 'Unknown Product'}</td>
+                                                                        <td className="px-4 py-2">{item?.category || 'Unknown Category'}</td>
+
                                                                         <td className="px-4 py-2">
                                                                               <div className="flex items-center gap-6">
                                                                                     <span onClick={() => handleMinus(item.id, item.quantity)} className="bg-gray-300 rounded-full p-1 px-1 text-gray-700">
@@ -149,22 +139,26 @@ const CartProducts = () => {
                                                                                     </span>
                                                                                     <span>{item.quantity}</span>
                                                                                     <span onClick={() => handlePlus(item.id)} className="bg-gray-300 rounded-full p-1 px-1 text-gray-700">
-                                                                                          <FiPlus size={20} className="cursor-pointer " />
+                                                                                          <FiPlus size={20} className="cursor-pointer" />
                                                                                     </span>
                                                                               </div>
                                                                         </td>
+
                                                                         <td className="px-4 py-2 line-through">
                                                                               <PriceFormate amount={item.oldprice} />
                                                                         </td>
+
                                                                         <td className="px-4 py-2">
                                                                               <PriceFormate amount={item.price} />
                                                                         </td>
+
                                                                         <td className="px-4 py-2">
                                                                               <PriceFormate amount={item.price * item.quantity} />
                                                                         </td>
                                                                   </tr>
                                                             ))}
                                                       </tbody>
+
                                                 </table>
                                           </div>
 
@@ -207,7 +201,7 @@ const CartProducts = () => {
 
                                                                   <div className="w-full h-24">
                                                                         <button
-                                                                        onClick={handleCheakOut}
+                                                                              onClick={handleCheakOut}
                                                                               className="bg-transparent border-2 border-blue-500 text-black rounded-lg w-full py-2 text-base lg:text-xl hover:text-gray-400 duration-300 my-2"
                                                                         >
                                                                               Payment

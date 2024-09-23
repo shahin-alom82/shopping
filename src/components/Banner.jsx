@@ -26,20 +26,20 @@ const Banner = () => {
       ]);
 
       return (
-                  <div className="overflow-hidden cursor-pointer relative z-0" ref={emblaRef}>
-                        <div className="flex">
-                              {bannerImages?.map((item) => (
-                                    <Image
-                                          key={item?.title}
-                                          src={item?.source}
-                                          alt="bannerOne"
-                                          width={2520}
-                                          height={880}
-                                    />
-                              ))}
-                        </div>
-                        <div className="absolute top-0 left-0 inset-0 bg-gradient-to-b from-gray-900/10 via-gray-900/30 to-gray-300 dark:to-mainColor" />
+            <div className="overflow-hidden cursor-pointer relative z-0" ref={emblaRef}>
+                  <div className="flex">
+                        {bannerImages?.map((item) => (
+                              <Image
+                                    key={item?.title}
+                                    src={item?.source}
+                                    alt="bannerOne"
+                                    width={2520}
+                                    height={880}
+                              />
+                        ))}
                   </div>
+                  {/* <div className="absolute top-0 left-0 inset-0 bg-gradient-to-b from-gray-900/10 via-gray-900/30 to-gray-300 dark:to-mainColor" /> */}
+            </div>
       );
 };
 

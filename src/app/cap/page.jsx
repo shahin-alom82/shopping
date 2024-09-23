@@ -2,7 +2,7 @@ import Container from "@/components/Container";
 import ProductCarts from "@/components/ProductCarts";
 import { fetchData } from "@/data";
 const CapPage = async () => {
-      const endPoint = "https://shopping-data-r4cq.vercel.app/shopping";
+      const endPoint = "https://shoppingapi.vercel.app/shopping";
       const product = await fetchData(endPoint);
       const filterData = product.filter((item) => item.category === "Cap");
       return (
