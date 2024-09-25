@@ -85,6 +85,7 @@ const Footer = () => {
                         <div>
                               <h1 className="text-[22px] font-medium">Talk To Us</h1>
                               <div className="mt-6 space-y-3">
+                                    {/* <h1></h1> */}
                                     <p className="text-gray-700">Got Questions? Call us</p>
                                     <p className="text-xl font-medium">+670 413 90 762</p>
                                     <p className="text-gray-700 flex items-center gap-3">
